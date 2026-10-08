@@ -4,7 +4,7 @@ A searchable, filterable, sortable list of **10,000 orders** that stays fast and
 
 - **Live demo:** https://dareaisearch-data-explorer.vercel.app
 - **GitHub:** https://github.com/Anjalicoder272/dareaisearch-data-explorer
-- **Demo video (≤ 5 min):** https://drive.google.com/file/d/1UyASD36gVTkqJ7LYDoSBxR8nwSIWO3pk/view?usp=sharing
+- **Demo video:** https://drive.google.com/file/d/1UyASD36gVTkqJ7LYDoSBxR8nwSIWO3pk/view?usp=sharing
 - **Stack:** React 18 + TypeScript + Vite · React Router · MSW (mock API) · Vitest + Testing Library
 
 The code deliberately uses **no data-fetching or virtualization libraries**: just React state, `fetch`, `AbortController`, `URLSearchParams` and `IntersectionObserver`, so every behaviour is easy to read and explain.
@@ -135,4 +135,23 @@ Example: `/?q=earbuds&status=shipped&category=Electronics&sort=amount&dir=asc&pa
 
 ## AI usage
 
-I used **Claude (Claude Code)** to help scaffold the project and draft components and tests from the assignment requirements. I asked it to rewrite a first, more complex version (React Query + virtualization) into this simpler version so I could fully understand and explain every part. I then reviewed the code, ran the type checker and tests, and checked each requirement against the assignment.
+I used **Claude (Claude Code)** as a pair programmer for this assignment. It drafted most of the code and tests; I decided what to build, questioned what I didn't understand, tested the UI myself and asked for changes until I was happy with it. Here is how that actually went.
+
+**Choosing the problem.** I compared both problem statements with Claude and picked Problem Statement 1 because it matches my day-to-day work at GeeksforGeeks: Next.js page performance, Core Web Vitals and infinite scroll with `IntersectionObserver`.
+
+**Rejecting the first version.** The first version used TanStack Query and TanStack Virtual. It worked and its tests passed, but I couldn't comfortably explain every line of it, so I asked for a rewrite using only React state, `fetch`, `AbortController`, `URLSearchParams` and `IntersectionObserver`. The code in this repo is that simpler rewrite.
+
+**Questions I asked before accepting the design:**
+- Where do the 10,000 orders come from? Are they hardcoded on the frontend? *(No: they're generated from small seeded lists inside the mock API, and the UI only ever sees them through `fetch`.)*
+- Does the assignment really ask for a mock API? *(Yes: "a small mock API you control (e.g. MSW…)".)*
+- Virtualization or infinite loading, and which is better here? *(They solve different problems: how much data to fetch vs how much to render. I chose infinite loading because the API is paged, slow and flaky, and it keeps the table accessible; see Tradeoffs.)*
+- Why have a "100% failure" chaos setting at all? *(To show the error and partial-failure states on demand in the demo, instead of waiting for a random 10% failure.)*
+
+**Problems I caught by testing the UI myself:**
+- Clicking a status chip or dropdown showed a thick blue outline, and later a purple glow, that looked bad. Now there's no outline on mouse clicks, and a soft focus ring only for keyboard users (still needed for accessibility).
+- I asked for dark mode. Switching themes then flickered because elements faded at different speeds. Now the switch happens in a single frame, and the toggle has a fixed width so the header doesn't shift.
+- I went through every requirement in the browser with a checklist: fast typing on a slow network, the chaos panel at 100% for the error and partial-failure states, refresh, Back/Forward, and keyboard-only use. I also ran `npm test` and `npm run build` before deploying.
+
+**Demo video.** The video was recorded by a Playwright script (`scripts/record-demo.mjs`) that I wrote with Claude. **The narration is AI text-to-speech (Microsoft Edge TTS), not my own voice.** The "Network log" box in the video is added by the script so the cancelled requests are visible on screen.
+
+**Decisions that were mine:** choosing the problem statement, dropping the library-heavy version for the simpler one, choosing infinite loading over virtualization, and the UI fixes above.
