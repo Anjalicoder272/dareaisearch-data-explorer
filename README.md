@@ -2,7 +2,8 @@
 
 A searchable, filterable, sortable list of **10,000 orders** that stays fast and **never shows the wrong results**, even when the network is slow or requests fail.
 
-- **Live demo:** _add your Vercel URL here_
+- **Live demo:** https://dareaisearch-data-explorer.vercel.app
+- **GitHub:** https://github.com/Anjalicoder272/dareaisearch-data-explorer
 - **Demo video (≤ 5 min):** _add link here_
 - **Stack:** React 18 + TypeScript + Vite · React Router · MSW (mock API) · Vitest + Testing Library
 
