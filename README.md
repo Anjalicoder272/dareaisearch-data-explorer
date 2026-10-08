@@ -4,7 +4,7 @@ A searchable, filterable, sortable list of **10,000 orders** that stays fast and
 
 - **Live demo:** https://dareaisearch-data-explorer.vercel.app
 - **GitHub:** https://github.com/Anjalicoder272/dareaisearch-data-explorer
-- **Demo video (≤ 5 min):** _add link here_
+- **Demo video (≤ 5 min):** https://drive.google.com/file/d/1UyASD36gVTkqJ7LYDoSBxR8nwSIWO3pk/view?usp=sharing
 - **Stack:** React 18 + TypeScript + Vite · React Router · MSW (mock API) · Vitest + Testing Library
 
 The code deliberately uses **no data-fetching or virtualization libraries**: just React state, `fetch`, `AbortController`, `URLSearchParams` and `IntersectionObserver`, so every behaviour is easy to read and explain.
@@ -19,9 +19,6 @@ npm run dev        # http://localhost:5173
 npm test           # 14 tests
 npm run build      # type-check + production build
 ```
-
-### Deploy (Vercel free tier)
-Import the GitHub repo in Vercel and choose the **Vite** preset. `vercel.json` makes deep links such as `/orders/ORD-100042` work.
 
 ---
 
@@ -50,7 +47,7 @@ src/
 
 ---
 
-## How each requirement is met (in simple words)
+## How each requirement is met 
 
 ### 1. Mock API with 10,000+ records
 - `data.ts` builds 10,000 orders by randomly combining small lists of names, products and cities. A **seeded** random function means it is the same 10,000 orders every time.
